@@ -47,6 +47,21 @@ npm run samples # génère 4 fond d'écran PNG d'exemple dans /samples
 | `tests/png.test.js` | rasterisation réelle du wallpaper en **PNG 1920×1080 et 3840×2160** (sharp/libvips) + les 4 vues isolées |
 | `tests/browser.test.js` | la vraie page dans jsdom : init, rendu, clics sur tous les contrôles, filtres de texte, synchro URL, export PNG bout en bout, surprise/reset, restauration de config depuis l'URL |
 
+### Hébergement Vercel (depuis GitHub)
+
+Le site est statique → **aucun build**. Le fichier `vercel.json` déclare explicitement
+la racine comme site statique (évite l'avertissement Vercel
+*« aucun répertoire static / functions / services »*).
+
+1. Sur [vercel.com](https://vercel.com) → *Sign in with GitHub*
+2. *Add New → Project* → importer le repo `fond-d-ecran`
+3. Configuration : laisser les valeurs par défaut (Framework `Other`,
+   build command vide, output `--`) — `vercel.json` fait le reste
+4. **Deploy** → URL publique `https://<projet>.vercel.app`
+
+Chaque push sur la branche déployée redéploie automatiquement ; chaque PR
+génère une URL d'aperçu. Pour un domaine perso : *Settings → Domains*.
+
 ## Structure
 
 ```
