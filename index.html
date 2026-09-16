@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoWall Studio — Ton studio de fond d'écran auto</title>
+  <meta name="description" content="Personnalise ta voiture (carrosserie, couleur, jantes, logo, décor) et télécharge ton fond d'écran Windows en PNG 1920×1080, 2560×1440 ou 3840×2160. 100% dans ton navigateur."/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9A%97%3C/text%3E%3C/svg%3E"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+
+  <a class="skip" href="#studio">Aller au configurateur</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="AutoWall Studio — accueil">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 28" fill="none">
+            <path d="M4 20 L7 12 C8 9 10 8 13 8 L30 8 C35 8 38 10 40 13 L44 16 C46 17 47 19 46 21 L44 21 L4 21 Z" fill="currentColor"/>
+            <circle cx="14" cy="21" r="4.4" fill="#0B0E14" stroke="currentColor" stroke-width="2.4"/>
+            <circle cx="36" cy="21" r="4.4" fill="#0B0E14" stroke="currentColor" stroke-width="2.4"/>
+          </svg>
+        </span>
+        <span class="brand-text">AUTO·WALL <em>STUDIO</em></span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a href="#vues">Les vues</a>
+        <a href="#studio">Studio</a>
+        <a href="#etape">Comment ça marche</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="btn btn-primary btn-sm" href="#studio">Personnaliser ma voiture</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============================ HERO ============================ -->
+    <section class="hero" id="vues">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Fond d'écran auto · 100% dans le navigateur</p>
+          <h1>Ta voiture.<br/><span class="grad">Ton fond d'écran.</span></h1>
+          <p class="lead">
+            Choisis la carrosserie, la couleur, les jantes, le logo et le décor.
+            Découvre ta voiture sous <strong>4 dimensions</strong> — côté, face, arrière, dessus —
+            puis télécharge ton fond d'écran en <strong>PNG</strong> aux résolutions Windows
+            (1920×1080, 2560×1440, 4K).
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#studio">🎨 Personnaliser ma voiture</a>
+            <button type="button" class="btn btn-ghost btn-lg" id="btnQuickDownload">⬇ Télécharger un aperçu</button>
+          </div>
+          <ul class="hero-stats" aria-label="Chiffres clés">
+            <li><strong>4</strong> carrosseries</li>
+            <li><strong>10+</strong> couleurs</li>
+            <li><strong>5</strong> jantes</li>
+            <li><strong>5</strong> logos</li>
+            <li><strong>5</strong> décors</li>
+            <li><strong>3</strong> résolutions</li>
+          </ul>
+        </div>
+
+        <div class="hero-stage-wrap">
+          <div class="stage-frame">
+            <span class="view-chip" id="heroViewChip">Vue Côté</span>
+            <div class="stage" id="heroStage" aria-live="polite"></div>
+            <div class="stage-floor" aria-hidden="true"></div>
+          </div>
+          <div class="hero-thumbs" id="heroThumbs" role="group" aria-label="Changer la vue de la voiture"></div>
+          <p class="stage-hint">La voiture tourne toutes seules — survole pour la fixer, clique sur une vue.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ STUDIO ============================ -->
+    <section class="studio" id="studio">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Le studio</p>
+          <h2>Personnalise entièrement ta voiture</h2>
+          <p class="section-sub">Chaque réglage met l'aperçu à jour instantanément. Ta config est sauvegardée dans l'URL : tu peux la partager ou la retrouver.</p>
+        </div>
+
+        <div class="studio-grid">
+          <!-- Aperçu -->
+          <div class="preview-pane">
+            <div class="preview-tabs" role="tablist" aria-label="Vue d'aperçu">
+              <button type="button" class="tab-btn active" data-tab="wallpaper" role="tab" aria-pressed="true">Fond d'écran</button>
+              <button type="button" class="tab-btn" data-tab="side" role="tab" aria-pressed="false">Côté</button>
+              <button type="button" class="tab-btn" data-tab="front" role="tab" aria-pressed="false">Face</button>
+              <button type="button" class="tab-btn" data-tab="rear" role="tab" aria-pressed="false">Arrière</button>
+              <button type="button" class="tab-btn" data-tab="top" role="tab" aria-pressed="false">Dessus</button>
+            </div>
+            <div class="preview-box" id="preview" aria-live="polite"></div>
+            <p class="preview-info" id="previewInfo"></p>
+            <div class="preview-actions">
+              <button type="button" class="btn btn-primary" id="btnDownload">⬇ Télécharger le PNG</button>
+              <span class="res-meta" id="resMeta"></span>
+            </div>
+            <div class="preview-actions mobile-only">
+              <button type="button" class="btn btn-primary" id="btnDownloadMobile">⬇ Télécharger le PNG</button>
+            </div>
+          </div>
+
+          <!-- Contrôles -->
+          <div class="controls-pane">
+            <div class="control-card">
+              <h3><span class="step-n">1</span> Carrosserie</h3>
+              <div class="opt-grid grid-4" id="bodyOptions"></div>
+            </div>
+
+            <div class="control-card">
+              <h3><span class="step-n">2</span> Couleur</h3>
+              <div class="swatch-row" id="colorOptions"></div>
+            </div>
+
+            <div class="control-card">
+              <h3><span class="step-n">3</span> Jantes</h3>
+              <div class="opt-grid grid-5" id="wheelOptions"></div>
+            </div>
+
+            <div class="control-card">
+              <h3><span class="step-n">4</span> Logo</h3>
+              <div class="opt-grid grid-5" id="logoOptions"></div>
+              <div class="custom-logo-row" id="logoLetterRow">
+                <label class="field-label" for="logoLetterInput">Toutes lettres (1-2) :</label>
+                <input id="logoLetterInput" type="text" maxlength="2" value=""
+                       pattern="[A-Z]{1,2}" placeholder="EX" autocomplete="off" spellcheck="false"/>
+              </div>
+              <div class="badge-row">
+                <span class="field-label">Matière du badge :</span>
+                <div class="opt-grid inline" id="badgeOptions"></div>
+              </div>
+            </div>
+
+            <div class="control-card">
+              <h3><span class="step-n">5</span> Décor du fond</h3>
+              <div class="opt-grid grid-5 scenes" id="sceneOptions"></div>
+            </div>
+
+            <div class="control-card">
+              <h3><span class="step-n">6</span> Texte &amp; résolution</h3>
+              <label class="field-label" for="captionInput">Texte sur le fond (optionnel, 28 car. max) :</label>
+              <input id="captionInput" type="text" maxlength="28" placeholder="EX : MA BERLINE · 2026" autocomplete="off"/>
+              <div class="res-row" id="resOptions" role="group" aria-label="Résolution"></div>
+            </div>
+
+            <div class="control-card actions-card">
+              <p class="recap-line" id="recap"></p>
+              <div class="actions-row">
+                <button type="button" class="btn btn-ghost" id="btnRandom" title="Configuration aléatoire">🎲 Surprise</button>
+                <button type="button" class="btn btn-ghost" id="btnShare" title="Copier le lien de ta config">🔗 Partager</button>
+                <button type="button" class="btn btn-ghost" id="btnReset" title="Revenir à la voiture par défaut">↺ Réinitialiser</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ ÉTAPES ============================ -->
+    <section class="steps" id="etape">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Comment ça marche</p>
+          <h2>Trois étapes, zéro installation</h2>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-big">01</span>
+            <h3>Choisis</h3>
+            <p>Carrosserie, couleur, jantes, logo, décor : chaque option dessine ta voiture en SVG paramétrique, en direct.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-big">02</span>
+            <h3>Personnalise</h3>
+            <p>Ajoute ton texte, change la matière du badge, teste les 4 vues. Ta configuration est encodée dans l'URL : copie-la, partage-la.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-big">03</span>
+            <h3>Télécharge</h3>
+            <p>Un PNG net en 1920×1080, 2560×1440 ou 3840×2160 — prêt pour ton fond d'écran Windows 10/11. Rien n'est envoyé sur un serveur.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FAQ ============================ -->
+    <section class="faq" id="faq">
+      <div class="wrap narrow">
+        <div class="section-head">
+          <p class="eyebrow">FAQ</p>
+          <h2>Questions rapides</h2>
+        </div>
+        <details class="faq-item">
+          <summary>Quel format de fichier est téléchargé ?</summary>
+          <p>Un <strong>PNG</strong> (qualité maximale, sans compression destructive) au ratio 16:9, disponible en Full HD 1920×1080, QHD 2560×1440 et 4K 3840×2160. Sur Windows : clic droit sur le bureau → « Personnaliser » → « Écran d'accueil ».</p>
+        </details>
+        <details class="faq-item">
+          <summary>Mon image est-elle envoyée sur un serveur ?</summary>
+          <p><strong>Non.</strong> Tout se passe dans ton navigateur : la voiture est dessinée en SVG, assemblée en canvas et exportée en PNG localement. Tu peux même fermer ta connexion après avoir chargé la page.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Puis-je retrouver ou partager ma configuration ?</summary>
+          <p>Oui : la configuration complète est encodée dans l'URL (après <code>#c=</code>). Copie le lien et ouvre-le plus tard — ou envoie-le à un ami, sa voiture apparaîtra identique.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Fonctionne-t-il hors-ligne / en local ?</summary>
+          <p>Oui. Le site est 100% statique (HTML, CSS, JS vanilla, sans build). Tu peux ouvrir <code>index.html</code> directement dans ton navigateur, ou lancer <code>npm start</code> pour un petit serveur local sur le port 3000.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p><strong>AUTO·WALL STUDIO</strong> — fait avec ❤ en SVG &amp; JS.</p>
+      <p class="footer-note">100% local · aucun compte · aucun cookie · aucun tracker</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/car-core.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
